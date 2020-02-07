@@ -30,6 +30,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import sqlite_databaseconnector.QueryResult;
+
 public class Frame {
 
 	private JFrame frame;
@@ -171,14 +173,59 @@ public class Frame {
 	}
 	
 	private void setupcentertable(Container pC) {
-		String tabledata[][] = { {"A","B","C","D","E","F","","","",},
-				                 {"G","H","I","J","K","L","","","",},
-				                 {"M","N","O","P","Q","R","","","",},
+		String tabledata[][] = { {"A","B","C","D","E","F","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
+				                 {"M","N","O","P","Q","R","","","",""},
+				                 {"G","H","I","J","K","L","","","",""},
 		
 		};
-		String tablenames[] = {"1","2","3","4","5","6","7","8","9",};
-//		tabledata = new String[100][100];
-//		tablenames = new String[100];
+		String tablenames[] = {"1","2","3","4","5","6","7","8","9",""};
 		table = new JTable(tabledata, tablenames);
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		pC.add(scroll,BorderLayout.CENTER);
@@ -195,35 +242,30 @@ public class Frame {
 				table.getModel().setValueAt(pDataset[row][col], row, col);
 			}
 		}
+	}
+	
+	public void settabledatabyquery(QueryResult queryResult) {
 		
-		
-		
-		table.getModel().setValueAt("qweqwe", 2, 1);
-		table.repaint();
+		for (int i=0; i<queryResult.getRowCount(); i=i+1) {
+			for (int j=0; j<queryResult.getColumnCount(); j=j+1) {
+				System.out.println(table.getModel().getValueAt(i, j));
+				table.getModel().setValueAt(queryResult.getData()[i][j].toString(), i, j);
+			}
+		}
 	}
 	
 	public void settablenames(String[] pNames) {
 		TableColumnModel cm = table.getColumnModel();
 		int cols = cm.getColumnCount();
 		
+		for(int i = cols;i>=1;i--) {
+			cm.removeColumn(cm.getColumn(i-1));
+		}
 		for(int i = 0;i<pNames.length;i++) {
-			if(i<cols) {
-				TableColumn tc = cm.getColumn(i);
-				tc.setHeaderValue(pNames[i]);
-			}else if(i>=cols){
-				TableColumn tc = new TableColumn();
-				tc.setHeaderValue(pNames[i]);
-				cm.addColumn(tc);
-			}
+			TableColumn tc = new TableColumn();
+			tc.setHeaderValue(pNames[i]);
+			cm.addColumn(tc);
 		}
-		
-		if(cols>pNames.length) {
-			for(int i =cols;i>pNames.length;i--) {
-				TableColumn tc = cm.getColumn(i-1);
-				cm.removeColumn(tc);
-			}
-		}
-		
 	}
 	
 }

@@ -46,12 +46,9 @@ public class Controller {
 				  }else {
 					  frame.settablenames(Interface.getCurrentQueryResult().getColumnNames());
 //					  frame.settabledata(Interface.getCurrentQueryResult().getData());
+					  frame.settabledatabyquery(Interface.getCurrentQueryResult());
 				  }
-			}
-			
-			
-			
-			
+			}		
 		}
 		
 	}
