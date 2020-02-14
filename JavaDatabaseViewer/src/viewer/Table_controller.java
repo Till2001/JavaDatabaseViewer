@@ -71,17 +71,11 @@ public class Table_controller {
 					
 				}
 			}
-			System.out.println(colsnew);//10
-			System.out.println(colsold);//9
-			System.out.println(colnames.length);//10
-			
-			
+
 			if(colsold > colsnew) {
 				for(int i = colsold;i>colsnew;i--) {
 					table.getColumnModel().removeColumn(table.getColumnModel().getColumn(i-1));
 				}
-				
-				
 				for(int i = 0;i<colsnew;i++) {
 					table.getColumnModel().getColumn(i).setHeaderValue(pCols[i]);
 				}
@@ -93,18 +87,12 @@ public class Table_controller {
 				for(int i = colsold;i<colsnew;i++) {
 					table.getColumnModel().addColumn(new TableColumn(i, 98, null, null));
 				}
-				
 				for(int i = 0;i<colsnew;i++) {
 					table.getColumnModel().getColumn(i).setHeaderValue(pCols[i]);
 				}
 			}
-			
-			
-			
 		}
-
 	}
-	
 	
 	
 }

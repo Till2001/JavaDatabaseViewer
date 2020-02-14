@@ -16,8 +16,7 @@ public class Controller {
 	public Controller(Frame pFrame, Table_controller pTablecontroller) {
 		frame = pFrame;
 		tablecontroller = pTablecontroller;
-		Interface = new DatabaseConnector("", 0, "", "", "");
-		
+		Interface = new DatabaseConnector("", 0, "", "", "");	
 	}
 	
 	
@@ -25,8 +24,6 @@ public class Controller {
 	
 	public void load(File dbfile) {
 		Interface = new DatabaseConnector("", 0, dbfile.getPath(), "", "");
-		
-		
 	}
 
 	public void executesql(String pCommand) {
@@ -38,13 +35,8 @@ public class Controller {
 				frame.consoleoutput(pCommand);
 			}else {
 				tablecontroller.gettablemodel().settablecols(Interface.getCurrentQueryResult().getColumnNames(),tablecontroller.gettable());	
-				
-				
 				tablecontroller.gettablemodel().setdataarray(Interface.getCurrentQueryResult().getData());
-				
-				
 				tablecontroller.gettable().updateUI();
-//				System.out.println(Interface.getCurrentQueryResult().getColumnNames()[1]);
 				  }
 			}		
 		}

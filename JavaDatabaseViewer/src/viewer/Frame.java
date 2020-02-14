@@ -40,13 +40,9 @@ public class Frame {
 	private JMenuItem[] datamenus;
 	private Container pane;
 	private Controller controller;
-	private JTable table;
 	private JSplitPane endconsole;
 	private JTextArea output;
 	private JTextField input;
-	private String[][] tabledata;
-	private String[]   tablenames;
-	private int maxarraysize;
 	private Table_controller tablecontroller;
 	
 	public Frame() {
@@ -72,17 +68,8 @@ public class Frame {
 		
 		topmenus = new JMenu[5];
 		topmenus[0]= new JMenu("Datei");
-		topmenus[1]= new JMenu("placeholder");
-		topmenus[2]= new JMenu("placeholder");
-		topmenus[3]= new JMenu("placeholder");
-		topmenus[4]= new JMenu("placeholder");
-
-		
-		for(int i = 0;i<topmenus.length;i++) {
-			topmenubar.add(topmenus[i]);
-		}
-		
-		datamenus = new JMenuItem[3];
+		topmenubar.add(topmenus[0]);		
+		datamenus = new JMenuItem[2];
 		datamenus[0] = new JMenuItem("Datenbank öffnen");
 		datamenus[0].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -105,10 +92,9 @@ public class Frame {
 
 			}
 		});
-		datamenus[1] = new JMenuItem("Datenbank speichern");
-		
-		datamenus[2] = new JMenuItem("Beenden");
-		datamenus[2].addActionListener(new ActionListener() {
+
+		datamenus[1] = new JMenuItem("Beenden");
+		datamenus[1].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
@@ -132,7 +118,6 @@ public class Frame {
 	private void setupendconsole(Container pC) {
 		endconsole = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		endconsole.setPreferredSize(new Dimension(0, 125));
-		
 		output = new JTextArea();
 		output.setEnabled(false);
 		JScrollPane scroll = new JScrollPane(output,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -174,100 +159,11 @@ public class Frame {
 		output.setText(output.getText()+"\n"+pOutput);
 	}
 	
-	private void setupcentertable(Container pC) {
-		String tabledata[][] = { {"A","B","C","D","E","F","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-				                 {"M","N","O","P","Q","R","","","",""},
-				                 {"G","H","I","J","K","L","","","",""},
-		
-		};
-		String tablenames[] = {"1","2","3","4","5","6","7","8","9",""};
-		table = new JTable(tabledata, tablenames);
-		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		pC.add(scroll,BorderLayout.CENTER);
-		
-	}
-	
 	public void throwerror(String ErrorMsg) {
 		JOptionPane.showMessageDialog(frame, ErrorMsg, "Fehler",JOptionPane.ERROR_MESSAGE);
 	}	
 	
-	public void settabledata(String[][] pDataset) {
-		for (int row = 0;row<pDataset.length;row++) {
-			for(int col = 0;col<pDataset[row].length;col++) {
-				table.getModel().setValueAt(pDataset[row][col], row, col);
-			}
-		}
+	public static void main(String[] args) {
+		Frame f = new Frame();
 	}
-	
-	public void settabledatabyquery(QueryResult queryResult) {
-		
-		for (int i=0; i<queryResult.getRowCount(); i=i+1) {
-			for (int j=0; j<queryResult.getColumnCount(); j=j+1) {
-				System.out.println(table.getModel().getValueAt(i, j));
-				table.getModel().setValueAt(queryResult.getData()[i][j].toString(), i, j);
-			}
-		}
-	}
-	
-	public void settablenames(String[] pNames) {
-		TableColumnModel cm = table.getColumnModel();
-		int cols = cm.getColumnCount();
-		
-		for(int i = cols;i>=1;i--) {
-			cm.removeColumn(cm.getColumn(i-1));
-		}
-		for(int i = 0;i<pNames.length;i++) {
-			TableColumn tc = new TableColumn();
-			tc.setHeaderValue(pNames[i]);
-			cm.addColumn(tc);
-		}
-	}
-	
 }
