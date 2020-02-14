@@ -47,28 +47,23 @@ public class Frame {
 	private String[][] tabledata;
 	private String[]   tablenames;
 	private int maxarraysize;
+	private Table_controller tablecontroller;
 	
 	public Frame() {
 		frame = new JFrame("Java Database Viewer");
 		frame.setMinimumSize(new Dimension(800, 600));
-		
-		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		pane = frame.getContentPane();
 		setuptopmenubar(pane);
-		setupcentertable(pane);
+		tablecontroller= new Table_controller();
+		setuptable();
 		setupendconsole(pane);
-		controller = new Controller(this,table);
-		int maxarraysize = 320000000;
-		
-
+		controller = new Controller(this,tablecontroller);
 		frame.pack();
-		frame.setVisible(true);
-
-		
+		frame.setVisible(true);	
 	}
 	
+
 	private void setuptopmenubar(Container pC) {
 		topmenubar = new JMenuBar();
 		pane.add(topmenubar, BorderLayout.PAGE_START);
@@ -126,6 +121,13 @@ public class Frame {
 	}
 
 
+	private void setuptable() {
+		JScrollPane scroll = new JScrollPane(tablecontroller.gettable(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		pane.add(scroll,BorderLayout.CENTER);
+		
+	}
+
+	
 	
 	private void setupendconsole(Container pC) {
 		endconsole = new JSplitPane(JSplitPane.VERTICAL_SPLIT);

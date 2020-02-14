@@ -10,12 +10,12 @@ public class Controller {
 
 	private Frame frame;
 	private DatabaseConnector Interface;
-	private JTable table;
+	private Table_controller tablecontroller;
 	
 	
-	public Controller(Frame pFrame, JTable pTable) {
+	public Controller(Frame pFrame, Table_controller pTablecontroller) {
 		frame = pFrame;
-		table = pTable;
+		tablecontroller = pTablecontroller;
 		Interface = new DatabaseConnector("", 0, "", "", "");
 		
 	}
@@ -25,8 +25,8 @@ public class Controller {
 	
 	public void load(File dbfile) {
 		Interface = new DatabaseConnector("", 0, dbfile.getPath(), "", "");
-//		frame.settablenames(Interface.getCurrentQueryResult().getColumnNames());
-//		frame.settabledata(Interface.getCurrentQueryResult().getData());
+		
+		
 	}
 
 	public void executesql(String pCommand) {
@@ -37,20 +37,17 @@ public class Controller {
 			if(Interface.getCurrentQueryResult()==null) {
 				frame.consoleoutput(pCommand);
 			}else {
-				  if(!(Interface.getCurrentQueryResult().getColumnCount()>=2||Interface.getCurrentQueryResult().getRowCount()>=2)) {
-					  for (int i=0; i<Interface.getCurrentQueryResult().getRowCount(); i=i+1) {
-						   for (int j=0; j<Interface.getCurrentQueryResult().getColumnCount(); j=j+1) {
-						    frame.consoleoutput(Interface.getCurrentQueryResult().getData()[i][j]+" ");
-						   }
-					  } 
-				  }else {
-					  frame.settablenames(Interface.getCurrentQueryResult().getColumnNames());
-//					  frame.settabledata(Interface.getCurrentQueryResult().getData());
-					  frame.settabledatabyquery(Interface.getCurrentQueryResult());
+				tablecontroller.gettablemodel().settablecols(Interface.getCurrentQueryResult().getColumnNames(),tablecontroller.gettable());	
+				
+				
+				tablecontroller.gettablemodel().setdataarray(Interface.getCurrentQueryResult().getData());
+				
+				
+				tablecontroller.gettable().updateUI();
+//				System.out.println(Interface.getCurrentQueryResult().getColumnNames()[1]);
 				  }
 			}		
 		}
 		
-	}
-	
 }
+	
